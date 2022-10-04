@@ -1,4 +1,4 @@
-[
+export default [
   {
     orderID: 10248,
     customerID: "VINET",
