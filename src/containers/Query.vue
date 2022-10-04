@@ -1,6 +1,6 @@
 <template>
   <div>
-    <query-input />
+    <query-input @onSearch="searchData" />
     <div class="action-button-container">
       <button
         class="btn btn-success"
@@ -28,7 +28,7 @@ import QueryInput from "@/components/QueryInput.vue";
 import QueryHistory from "@/components/QueryHistory.vue";
 import VueVirtualTable from "vue-virtual-table";
 
-import { getCustomers, getPrettyHeader } from "@/util/FakePromise";
+import { getCustomers, getPrettyHeader, getOrders } from "@/util/FakePromise";
 
 export default {
   components: { QueryInput, QueryHistory, VueVirtualTable },
@@ -44,12 +44,28 @@ export default {
     toggleHistoryExpand() {
       this.showHistory = !this.showHistory;
     },
+    getCustomersData() {
+      getCustomers().then((r) => {
+        this.result = r;
+        this.headers = getPrettyHeader(r[0]);
+      });
+    },
+    getOrdersData() {
+      getOrders().then((r) => {
+        this.result = r;
+        this.headers = getPrettyHeader(r[0]);
+      });
+    },
+    searchData({ query } = {}) {
+      if (query && query.includes("customer")) {
+        this.getCustomersData();
+      } else {
+        this.getOrdersData();
+      }
+    },
   },
   mounted() {
-    getCustomers().then((r) => {
-      this.result = r;
-      this.headers = getPrettyHeader(r[0]);
-    });
+    this.getCustomersData();
   },
 };
 </script>

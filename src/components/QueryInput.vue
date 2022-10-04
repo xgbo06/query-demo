@@ -2,7 +2,9 @@
   <div>
     <form @submit.prevent="onQuerySubmit" @keyup.ctrl.enter="onQuerySubmit">
       <textarea class="form-control" v-model="query"></textarea>
-      <button class="btn btn-success" type="submit">Submit</button>
+      <button class="btn btn-success" type="submit" :disabled="!query">
+        Submit
+      </button>
       <button class="btn btn-warning" type="reset">Reset</button>
     </form>
   </div>
@@ -20,7 +22,9 @@ export default {
   },
   methods: {
     onQuerySubmit() {
-      console.log(this.query, "query");
+      if (this.query) {
+        this.$emit("onSearch", { query: this.query });
+      }
     },
   },
 };

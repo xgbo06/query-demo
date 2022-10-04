@@ -1,9 +1,18 @@
 import customers from "../data/customers";
+import orders from "../data/orders";
 
 export function getCustomers() {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve(customers);
+    }, Math.random() * 100);
+  });
+}
+
+export function getOrders() {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(orders);
     }, Math.random() * 100);
   });
 }
